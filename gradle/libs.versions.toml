@@ -28,6 +28,7 @@ slf4jVersion = "2.0.17"
 # Testing
 junitJupiterVersion = "5.13.2"
 mockkVersion = "1.14.4"
+jetbrainsKotlinJvmVersion = "2.2.0"
 
 [libraries]
 # Android
@@ -78,3 +79,4 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinVersion" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "daggerVersion" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvmVersion" }
