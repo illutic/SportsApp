@@ -4,4 +4,9 @@ plugins {
 
 dependencies {
     implementation(libs.kotlinx.coroutines)
+
+    // Testing
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.io.mockk)
 }
