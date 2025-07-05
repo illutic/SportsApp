@@ -48,8 +48,26 @@ android {
 
 dependencies {
     implementation(projects.core.domain)
+    implementation(projects.core.data)
+    implementation(projects.core.ui)
 
+    // Android
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle)
     implementation(libs.androidx.activity.compose)
+
+    // Async
+    implementation(libs.kotlinx.coroutines)
+
+    // Dependency Injection
+    implementation(platform(libs.koin.bom))
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
+
+    // Testing
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.io.ktor.client.mock)
+    testImplementation(libs.io.mockk)
 }

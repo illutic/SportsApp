@@ -41,7 +41,6 @@ dependencies {
 
     // Serialization
     implementation(libs.kotlinx.serialization.json)
-    implementation(libs.kotlinx.serialization.proto)
 
     // Networking
     implementation(libs.io.ktor.client)

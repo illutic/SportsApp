@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">SportsApp</string>
+
+    <string name="error_fetch_sports">Failed to get sports.</string>
+    <string name="error_toggle_favorite">Failed to update favorite.</string>
 </resources>
