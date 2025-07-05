@@ -1,6 +1,5 @@
 package g.sig.sportsapp.features.home.components.sportscard
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -37,15 +36,16 @@ internal fun SportCard(
             onExpand = { onSportExpand(state.id) },
         )
 
-        if(state.isExpanded) {
+        if (state.isExpanded) {
             SportsCardEvents(
                 eventUiItems = state.eventsToShow,
                 onFavorite = onEventFavorite,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(ColorPalette.SportsGray)
-                    .padding(vertical = Spacing.padding_8)
-                    .heightIn(max = EventsListHeight),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .background(ColorPalette.SportsGray)
+                        .padding(vertical = Spacing.padding_8)
+                        .heightIn(max = EventsListHeight),
             )
         }
     }

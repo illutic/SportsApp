@@ -16,7 +16,7 @@ import g.sig.sportsapp.features.home.components.eventcard.EventCard
 import g.sig.sportsapp.features.home.mvi.EventUiItem
 import java.util.Calendar
 
-private val EventCardWidth = 90.dp
+private val EventCardWidth = 120.dp
 
 @Composable
 internal fun SportsCardEvents(
