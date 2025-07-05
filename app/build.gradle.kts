@@ -68,6 +68,5 @@ dependencies {
     // Testing
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
-    testImplementation(libs.io.ktor.client.mock)
     testImplementation(libs.io.mockk)
 }

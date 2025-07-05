@@ -21,6 +21,13 @@ import java.util.Calendar
 
 private const val TICK_IN_MILLIS = 1000L
 
+internal fun getFormattedTimeOf(millis: Long): String {
+    val seconds = ((millis / 1000) % 60).coerceAtLeast(0)
+    val minutes = ((millis / (1000 * 60)) % 60).coerceAtLeast(0)
+    val hours = (millis / (1000 * 60 * 60)).coerceAtLeast(0)
+    return "%02d:%02d:%02d".format(hours, minutes, seconds)
+}
+
 @Composable
 internal fun Counter(
     startDateInMillis: Long,
@@ -31,11 +38,7 @@ internal fun Counter(
     LaunchedEffect(startDateInMillis) {
         var timeDifference = startDateInMillis - System.currentTimeMillis()
         while (timeDifference > 0) {
-            val seconds = (timeDifference / 1000) % 60
-            val minutes = (timeDifference / (1000 * 60)) % 60
-            val hours = (timeDifference / (1000 * 60 * 60))
-
-            formatedDate = "%02d:%02d:%02d".format(hours, minutes, seconds)
+            formatedDate = getFormattedTimeOf(timeDifference)
             timeDifference -= TICK_IN_MILLIS
             delay(TICK_IN_MILLIS)
         }
