@@ -1,6 +1,7 @@
 package g.sig.sportsapp.features.home.components.sportscard
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,7 +28,7 @@ internal fun SportCard(
     onEventFavorite: (id: String, isFavorite: Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier) {
+    Column(modifier.animateContentSize()) {
         SportCardHeader(
             name = state.name,
             isFavorite = state.getFavoritesOnly,
@@ -36,18 +37,15 @@ internal fun SportCard(
             onExpand = { onSportExpand(state.id) },
         )
 
-        AnimatedVisibility(
-            visible = state.isExpanded,
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .background(ColorPalette.SportsGray)
-                    .padding(vertical = Spacing.padding_8),
-        ) {
+        if(state.isExpanded) {
             SportsCardEvents(
                 eventUiItems = state.eventsToShow,
                 onFavorite = onEventFavorite,
-                modifier = Modifier.heightIn(max = EventsListHeight),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(ColorPalette.SportsGray)
+                    .padding(vertical = Spacing.padding_8)
+                    .heightIn(max = EventsListHeight),
             )
         }
     }
