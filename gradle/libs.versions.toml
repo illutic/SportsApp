@@ -4,12 +4,10 @@
 kotlinVersion = "2.2.0"
 kotlinxCoroutinesVersion = "1.10.2"
 kotlinxSerializationJsonVersion = "1.9.0"
-kspVersion = "2.1.21-2.0.2"
+kspVersion = "2.2.0-2.0.2"
 
 # Android
 androidGradleVersion = "8.11.0"
-materialVersion = "1.12.0"
-daggerVersion = "2.56.2"
 
 # AndroidX
 androidXCoreVersion = "1.16.0"
@@ -17,25 +15,22 @@ androidXLifecycleVersion = "2.9.1"
 androidXActivityVersion = "1.10.1"
 androidXComposeBomVersion = "2025.06.01"
 androidXComposeNavigation = "2.9.1"
-androidXHiltNavigationVersion = "1.2.0"
-androidXDataStoreVersion = "1.1.7"
+androidXRoomVersion = "2.7.2"
 
 # Other
 coilVersion = "2.7.0"
 ktorClientVersion = "3.2.1"
 slf4jVersion = "2.0.17"
 
+# Dependency Injection
+koin = "4.1.0"
+
 # Testing
-junitJupiterVersion = "5.13.2"
+junit4Version = "4.13.2"
 mockkVersion = "1.14.4"
 jetbrainsKotlinJvmVersion = "2.2.0"
 
 [libraries]
-# Android
-android-material3 = { group = "com.google.android.material", name = "material3", version.ref = "materialVersion" }
-dagger-hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "daggerVersion" }
-dagger-hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "daggerVersion" }
-
 # AndroidX
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidXCoreVersion" }
 androidx-lifecycle = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidXLifecycleVersion" }
@@ -48,9 +43,7 @@ androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "u
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-compose-ui-test = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
-androidx-compose-material = { group = "androidx.compose.material", name = "material" }
-androidx-hilt-navigation = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidXHiltNavigationVersion" }
-androidx-datastore = { group = "androidx.datastore", name = "datastore", version.ref = "androidXDataStoreVersion" }
+androidx-compose-material = { group = "androidx.compose.material", name = "material3" }
 
 # KotlinX
 kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesVersion" }
@@ -58,18 +51,34 @@ kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-cor
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJsonVersion" }
 kotlinx-serialization-proto = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-protobuf", version.ref = "kotlinxSerializationJsonVersion" }
 
-# Others
+# Networking
 io-ktor-client = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktorClientVersion" }
 io-ktor-client-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktorClientVersion" }
 io-ktor-client-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktorClientVersion" }
+io-ktor-client-content-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktorClientVersion" }
+io-ktor-client-content-negotiation-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktorClientVersion" }
 io-ktor-client-mock = { group = "io.ktor", name = "ktor-client-mock", version.ref = "ktorClientVersion" }
-io-coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilVersion" }
+
+# Room
+androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "androidXRoomVersion" }
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "androidXRoomVersion" }
+
+# Logging
 slf4j = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4jVersion" }
 slf4j-simple = { group = "org.slf4j", name = "slf4j-simple", version.ref = "slf4jVersion" }
 
+# Image Loading
+io-coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilVersion" }
+
 # Testing
-junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junitJupiterVersion" }
 io-mockk = { group = "io.mockk", name = "mockk", version.ref = "mockkVersion" }
+junit = { group = "junit", name = "junit", version.ref = "junit4Version" }
+
+# Dependency Injection
+koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin" }
+koin-core = { module = "io.insert-koin:koin-core" }
+koin-android = { module = "io.insert-koin:koin-android" }
+koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradleVersion" }
@@ -78,5 +87,4 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinVer
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinVersion" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinVersion" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "daggerVersion" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvmVersion" }
