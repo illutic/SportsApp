@@ -5,11 +5,8 @@ import g.sig.core.data.local.dao.EventDao
 import g.sig.core.data.local.enitites.EventLocalDto
 import g.sig.core.domain.entities.Event
 import io.mockk.coEvery
-import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
@@ -27,24 +24,22 @@ class EventRepositoryImplTest {
                         ),
                 )
 
-            every { mockDao.getEventsBySportId(any()) }
+            coEvery { mockDao.getEventsBySportId(any()) }
                 .returns(
-                    flowOf(
-                        listOf(
-                            EventLocalDto(
-                                id = "1",
-                                name = "Event 1",
-                                sportId = "sport1",
-                                isFavorite = false,
-                                startTime = 0,
-                            ),
-                            EventLocalDto(
-                                id = "2",
-                                name = "Event 2",
-                                sportId = "sport1",
-                                isFavorite = true,
-                                startTime = 0,
-                            ),
+                    listOf(
+                        EventLocalDto(
+                            id = "1",
+                            name = "Event 1",
+                            sportId = "sport1",
+                            isFavorite = false,
+                            startTime = 0,
+                        ),
+                        EventLocalDto(
+                            id = "2",
+                            name = "Event 2",
+                            sportId = "sport1",
+                            isFavorite = true,
+                            startTime = 0,
                         ),
                     ),
                 )
@@ -54,17 +49,19 @@ class EventRepositoryImplTest {
                     Event(
                         id = "1",
                         name = "Event 1",
+                        sportId = "sport1",
                         isFavorite = false,
                         startTime = 0,
                     ),
                     Event(
                         id = "2",
                         name = "Event 2",
+                        sportId = "sport1",
                         isFavorite = true,
                         startTime = 0,
                     ),
                 )
-            val result = repository.getEventsBySport("sport1").first()
+            val result = repository.getEventsBySport("sport1").getOrThrow()
             assertEquals(expectedEvents, result)
         }
 
@@ -81,10 +78,10 @@ class EventRepositoryImplTest {
                         ),
                 )
 
-            every { mockDao.getEventsBySportId(any()) }
-                .returns(flowOf(emptyList()))
+            coEvery { mockDao.getEventsBySportId(any()) }
+                .returns(emptyList())
 
-            val result = repository.getEventsBySport("sport1").first()
+            val result = repository.getEventsBySport("sport1").getOrThrow()
             assertEquals(emptyList<Event>(), result)
         }
 
@@ -129,6 +126,7 @@ class EventRepositoryImplTest {
                 Event(
                     id = "1",
                     name = "Event 1",
+                    sportId = "sport1",
                     isFavorite = favorite,
                     startTime = 0,
                 )
@@ -153,6 +151,68 @@ class EventRepositoryImplTest {
             val favorite = true
 
             val result = repository.favoriteEvent(eventId, favorite)
-            assertEquals(Result.failure<Event>(Throwable()), result)
+            assert(result.isFailure)
+        }
+
+    @Test
+    fun `when favorite event with invalid data, then return error`() =
+        runTest {
+            val mockDao = mockk<EventDao>()
+            val repository =
+                EventRepositoryImpl(
+                    localEventDataSource =
+                        LocalEventDataSource(
+                            coroutineScope = this,
+                            eventDao = mockDao,
+                        ),
+                )
+
+            val eventId = "invalid"
+            val favorite = true
+
+            coEvery { mockDao.getEventById(eventId) } throws Throwable()
+
+            val result = repository.favoriteEvent(eventId, favorite)
+            assert(result.isFailure)
+        }
+
+    @Test
+    fun `when getting events of favorite sport, then return only favorite events`() =
+        runTest {
+            val mockDao = mockk<EventDao>()
+            val repository =
+                EventRepositoryImpl(
+                    localEventDataSource =
+                        LocalEventDataSource(
+                            coroutineScope = this,
+                            eventDao = mockDao,
+                        ),
+                )
+
+            coEvery { mockDao.getEventsBySportId("sport1") }
+                .returns(
+                    listOf(
+                        EventLocalDto(
+                            id = "2",
+                            name = "Event 2",
+                            sportId = "sport1",
+                            isFavorite = true,
+                            startTime = 0,
+                        ),
+                    ),
+                )
+
+            val expectedEvents =
+                listOf(
+                    Event(
+                        id = "2",
+                        name = "Event 2",
+                        isFavorite = true,
+                        startTime = 0,
+                        sportId = "sport1",
+                    ),
+                )
+            val result = repository.getEventsBySport("sport1").getOrThrow()
+            assertEquals(expectedEvents, result)
         }
 }

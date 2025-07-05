@@ -1,7 +1,6 @@
 package g.sig.core.domain.repository
 
 import g.sig.core.domain.entities.Event
-import kotlinx.coroutines.flow.Flow
 
 interface EventRepository {
     /**
@@ -19,5 +18,5 @@ interface EventRepository {
      * @param sportId The ID of the sport to fetch events for.
      * @return List of events for the specified sport.
      */
-    suspend fun getEventsBySport(sportId: String): Flow<List<Event>>
+    suspend fun getEventsBySport(sportId: String): Result<List<Event>>
 }

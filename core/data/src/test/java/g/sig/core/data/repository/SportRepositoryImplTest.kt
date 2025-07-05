@@ -4,7 +4,6 @@ import g.sig.core.data.datasource.local.LocalSportDataSource
 import g.sig.core.data.datasource.remote.RemoteSportDataSource
 import g.sig.core.data.local.dao.EventDao
 import g.sig.core.data.local.dao.SportDao
-import g.sig.core.data.local.enitites.toLocal
 import g.sig.core.data.remote.ApiClient
 import g.sig.core.data.remote.enitites.EventApiDto
 import g.sig.core.data.remote.enitites.SportApiDto
@@ -13,8 +12,6 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
@@ -73,7 +70,7 @@ class SportRepositoryImplTest {
                 )
 
             // Suppose the local database has some sports
-            coEvery { mockSportDao.getSports() } returns flowOf(mockLocalSportData)
+            coEvery { mockSportDao.getSports() } returns mockLocalSportData
 
             // Suppose the API returns the mock data
             coEvery { mockSportApi.getSports() } returns Result.success(mockApiSportData)
@@ -84,17 +81,19 @@ class SportRepositoryImplTest {
             // Suppose inserting sports into the local database succeeds
             coEvery { mockSportDao.insertSport(any()) } returns Unit
 
-            val result = repository.getSports().first()
+            val result = repository.getSports().getOrThrow()
 
             val expected =
                 listOf(
                     Sport(
                         id = "1",
                         name = "Football",
+                        events = emptyList(),
                     ),
                     Sport(
                         id = "2",
                         name = "Basketball",
+                        events = emptyList(),
                     ),
                 )
 
@@ -128,12 +127,12 @@ class SportRepositoryImplTest {
                 )
 
             // Suppose the local database has some sports
-            coEvery { mockSportDao.getSports() } returns flowOf(mockLocalSportData)
+            coEvery { mockSportDao.getSports() } returns mockLocalSportData
 
             // Suppose the API call fails
             coEvery { mockSportApi.getSports() } returns Result.failure(Exception("API Error"))
 
-            val result = repository.getSports().first()
+            val result = repository.getSports().getOrThrow()
 
             assertEquals(mockLocalSportData.map { it.toDomain() }, result)
         }

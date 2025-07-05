@@ -3,7 +3,6 @@ package g.sig.core.data.datasource.local
 import g.sig.core.data.local.dao.EventDao
 import g.sig.core.data.local.enitites.EventLocalDto
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.Flow
 
 internal class LocalEventDataSource(
     coroutineScope: CoroutineScope,
@@ -19,5 +18,5 @@ internal class LocalEventDataSource(
             eventDao.insertEvent(event)
         }
 
-    fun getEventsBySport(sportId: String): Flow<List<EventLocalDto>> = eventDao.getEventsBySportId(sportId)
+    suspend fun getEventsBySport(sportId: String): List<EventLocalDto> = eventDao.getEventsBySportId(sportId)
 }

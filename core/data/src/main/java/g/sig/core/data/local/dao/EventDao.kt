@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import g.sig.core.data.local.enitites.EventLocalDto
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 internal interface EventDao {
@@ -16,5 +15,5 @@ internal interface EventDao {
     suspend fun insertEvent(event: EventLocalDto)
 
     @Query("SELECT * FROM events WHERE sportId = :sportId")
-    fun getEventsBySportId(sportId: String): Flow<List<EventLocalDto>>
+    suspend fun getEventsBySportId(sportId: String): List<EventLocalDto>
 }

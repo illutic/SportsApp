@@ -14,5 +14,6 @@ data class SportLocalDto(
         Sport(
             id = id,
             name = name,
+            events = emptyList(),
         )
 }

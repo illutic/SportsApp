@@ -20,7 +20,7 @@ data class EventApiDto(
             id = id,
             sportId = sportId,
             name = name,
-            startTime = startTime,
+            startTime = startTime.toLong(),
             isFavorite = false,
         )
 }
