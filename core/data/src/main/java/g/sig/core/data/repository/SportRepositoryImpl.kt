@@ -4,7 +4,6 @@ import g.sig.core.data.datasource.local.LocalSportDataSource
 import g.sig.core.data.datasource.remote.RemoteSportDataSource
 import g.sig.core.domain.entities.Sport
 import g.sig.core.domain.repository.SportRepository
-import kotlinx.coroutines.flow.map
 
 internal class SportRepositoryImpl(
     private val localSportDataSource: LocalSportDataSource,
