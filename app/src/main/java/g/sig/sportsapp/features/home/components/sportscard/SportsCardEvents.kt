@@ -1,8 +1,11 @@
 package g.sig.sportsapp.features.home.components.sportscard
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
@@ -34,12 +37,13 @@ private fun SportsCardEventsContent(
     onFavorite: (id: String, isFavorite: Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    FlowRow(
+    LazyVerticalGrid(
         modifier = modifier,
+        columns = GridCells.Adaptive(minSize = EventCardWidth),
         horizontalArrangement = Arrangement.spacedBy(Spacing.padding_8),
         verticalArrangement = Arrangement.spacedBy(Spacing.padding_8),
     ) {
-        eventUiItems.forEach { eventCardState ->
+        items(eventUiItems) { eventCardState ->
             EventCard(
                 eventUiItem = eventCardState,
                 onFavorite = onFavorite,
