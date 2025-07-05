@@ -3,6 +3,7 @@ package g.sig.core.data
 import androidx.room.Room
 import g.sig.core.data.async.AppDispatcher
 import g.sig.core.data.datasource.local.LocalEventDataSource
+import g.sig.core.data.datasource.local.LocalFavoriteDataSource
 import g.sig.core.data.datasource.local.LocalSportDataSource
 import g.sig.core.data.datasource.remote.RemoteSportDataSource
 import g.sig.core.data.local.SportsDatabase
@@ -100,6 +101,13 @@ internal val localDataSourceModule =
                 sportDao = get<SportsDatabase>().sportDao(),
             )
         }
+
+        single {
+            LocalFavoriteDataSource(
+                coroutineScope = CoroutineScope(get<CoroutineDispatcher>(named<AppDispatcher.IO>())),
+                favoriteDao = get<SportsDatabase>().favoriteDao(),
+            )
+        }
     }
 
 internal val eventRepositoryModule =
@@ -107,6 +115,7 @@ internal val eventRepositoryModule =
         single<EventRepository> {
             EventRepositoryImpl(
                 localEventDataSource = get(),
+                localFavoriteDataSource = get(),
             )
         }
     }

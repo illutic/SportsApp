@@ -26,7 +26,6 @@ data class EventLocalDto(
     val sportId: String,
     val name: String,
     val startTime: Long,
-    val isFavorite: Boolean,
 ) {
     fun toDomain() =
         Event(
@@ -34,6 +33,6 @@ data class EventLocalDto(
             sportId = sportId,
             name = name,
             startTime = startTime,
-            isFavorite = isFavorite,
+            isFavorite = false,
         )
 }

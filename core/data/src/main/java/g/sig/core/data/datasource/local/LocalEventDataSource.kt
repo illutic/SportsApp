@@ -13,10 +13,5 @@ internal class LocalEventDataSource(
             eventDao.getEventById(id)
         }
 
-    suspend fun updateEvent(event: EventLocalDto): Result<Unit> =
-        runCatching {
-            eventDao.insertEvent(event)
-        }
-
     suspend fun getEventsBySport(sportId: String): List<EventLocalDto> = eventDao.getEventsBySportId(sportId)
 }
