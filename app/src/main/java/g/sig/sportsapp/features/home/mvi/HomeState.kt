@@ -14,6 +14,7 @@ import g.sig.core.ui.ColorPalette
 internal class HomeState {
     var isLoading by mutableStateOf(false)
     var sportUiItems by mutableStateOf<List<SportUiItem>>(emptyList())
+    val isEmpty get() = sportUiItems.isEmpty() && !isLoading
 }
 
 internal data class SportUiItem(

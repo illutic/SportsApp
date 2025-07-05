@@ -3,4 +3,5 @@
 
     <string name="error_fetch_sports">Failed to get sports.</string>
     <string name="error_toggle_favorite">Failed to update favorite.</string>
+    <string name="no_sports">No sports available</string>
 </resources>
