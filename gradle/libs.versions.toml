@@ -43,7 +43,7 @@ androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "u
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-compose-ui-test = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
-androidx-compose-material = { group = "androidx.compose.material", name = "material3" }
+androidx-compose-material = { group = "androidx.compose.material3", name = "material3" }
 
 # KotlinX
 kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesVersion" }
@@ -79,6 +79,18 @@ koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin" }
 koin-core = { module = "io.insert-koin:koin-core" }
 koin-android = { module = "io.insert-koin:koin-android" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose" }
+
+[bundles]
+compose = [
+    "androidx-compose-ui",
+    "androidx-compose-ui-graphics",
+    "androidx-compose-ui-tooling-preview",
+    "androidx-compose-ui-tooling",
+    "androidx-compose-ui-test",
+    "androidx-compose-ui-test-manifest",
+    "androidx-compose-material",
+    "androidx-compose-navigation"
+]
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradleVersion" }
